@@ -1,0 +1,878 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: API-Gestao-RH-ColaboradoresRobbyson
+  description: Local Integration API
+  x-ibm-name: api-gestao-rh-colaboradoresrobbyson
+paths:
+  /transacoes/:
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transacao'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  '/transacoes/{idTransacao}':
+    parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - name: idTransacao
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transacao'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - in: query
+          name: dataInicio
+          required: false
+          schema:
+            type: string
+            pattern: '^\d{4}-(0[1-9]|1[0-2])-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        - in: query
+          name: dataFim
+          required: false
+          schema:
+            type: string
+            pattern: '^\d{4}-(0[1-9]|1[0-2])-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transacao'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  /colaboradores/:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: itensPorPagina
+          in: query
+          schema:
+            type: integer
+            default: 42
+      responses:
+        '200':
+          $ref: '#/components/responses/ColaboradoresResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ColaboradoresRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ColaboradoresRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ColaboradoresResponseOperacao'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  /indicadores/:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: itensPorPagina
+          in: query
+          schema:
+            type: integer
+            default: 42
+      responses:
+        '200':
+          $ref: '#/components/responses/IndicadoresResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/IndicadoresRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/IndicadoresRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  /atributos/:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: codigoColaborador
+          in: query
+          schema:
+            type: string
+        - name: nome
+          in: query
+          schema:
+            type: string
+        - name: nivel
+          in: query
+          schema:
+            type: number
+        - name: valor
+          in: query
+          schema:
+            type: string
+        - name: data
+          in: query
+          schema:
+            type: string
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: itensPorPagina
+          in: query
+          schema:
+            type: integer
+            default: 42
+      responses:
+        '200':
+          $ref: '#/components/responses/AtributosResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AtributosRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AtributosRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  /hierarquias/:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: codigoColaborador
+          in: query
+          schema:
+            type: string
+        - name: nomeNivel
+          in: query
+          schema:
+            type: string
+        - name: pesoNivel
+          in: query
+          schema:
+            type: number
+        - name: idSuperior
+          in: query
+          schema:
+            type: string
+        - name: data
+          in: query
+          schema:
+            type: string
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: itensPorPagina
+          in: query
+          schema:
+            type: integer
+            default: 42
+      responses:
+        '200':
+          $ref: '#/components/responses/HierarquiasResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/HierarquiasRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/HierarquiasRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+  /resultados/:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: itensPorPagina
+          in: query
+          schema:
+            type: integer
+            default: 42
+      responses:
+        '200':
+          $ref: '#/components/responses/ResultadosResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    put:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ResultadosRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - name: idTransacao
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ResultadosRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envio'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedActionResponse'
+components:
+  parameters:
+    Authorization:
+      in: header
+      name: Authorization
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    ColaboradoresRequest:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Colaborador'
+      required: true
+    AtributosRequest:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Atributo'
+      required: true
+    ResultadosRequest:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Resultado'
+      required: true
+    IndicadoresRequest:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Indicador'
+      required: true
+    HierarquiasRequest:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Hierarquia'
+      required: true
+  responses:
+    ColaboradoresResponse:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Colaborador'
+              meta:
+                $ref: '#/components/schemas/Metadata'
+    AtributosResponse:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Atributo'
+              meta:
+                $ref: '#/components/schemas/Metadata'
+    ResultadosResponse:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resultado'
+              meta:
+                $ref: '#/components/schemas/Metadata'
+    IndicadoresResponse:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Indicador'
+              meta:
+                $ref: '#/components/schemas/Metadata'
+    HierarquiasResponse:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hierarquia'
+              meta:
+                $ref: '#/components/schemas/Metadata'
+    ColaboradoresResponseOperacao:
+      description: Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ColaboradorOperacao'
+  schemas:
+    Transacao:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+    UnauthorizedActionResponse:
+      type: string
+    Metadata:
+      type: object
+      properties:
+        idTransacao:
+          type: string
+        pagina:
+          type: integer
+        itensPorPagina:
+          type: integer
+        totalPaginas:
+          type: integer
+      required:
+        - idTransacao
+    Envio:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+    Colaborador:
+      type: object
+      properties:
+        _id:
+          type: string
+        nome:
+          type: string
+        identificacao:
+          type: string
+          description: Collaborator Identification
+        matricula:
+          type: string
+          description: Collaborator Matricula
+        genero:
+          type: string
+          enum:
+            - M
+            - F
+        ativo:
+          type: boolean
+          description: Collaborator is active ?
+        dataAniversario:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        dataAdmissao:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        email:
+          type: string
+          pattern: '^[a-zA-Z0-9.!#$%&*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'
+          format: email
+        estadoCivil:
+          type: string
+        logradouro:
+          type: string
+        numero:
+          type: number
+        bairro:
+          type: string
+        cidade:
+          type: string
+        estado:
+          type: string
+        pais:
+          type: string
+        naturalidade:
+          type: string
+        complemento:
+          type: string
+        telefone:
+          type: string
+        escolaridade:
+          type: string
+        logradouroComercial:
+          type: string
+        numeroComercial:
+          type: number
+        bairroComercial:
+          type: string
+        cidadeComercial:
+          type: string
+        estadoComercial:
+          type: string
+        paisComercial:
+          type: string
+        idControleContratante:
+          type: string
+        quantidadeDependentes:
+          type: number
+        idFila:
+          type: string
+        idContratante:
+          type: string
+        __v:
+          type: integer
+      required:
+        - nome
+        - identificacao
+        - genero
+        - ativo
+        - dataNascimento
+    Indicador:
+      type: object
+      properties:
+        _id:
+          type: string
+        nome:
+          type: string
+        idIndicador:
+          type: string
+        descricao:
+          type: string
+        idFila:
+          type: string
+        idContratante:
+          type: string
+        __v:
+          type: integer
+      required:
+        - nome
+        - idIndicador
+        - descricao
+    Atributo:
+      type: object
+      properties:
+        _id:
+          type: string
+        idColaborador:
+          type: string
+        nome:
+          type: string
+        nivel:
+          type: number
+        valor:
+          type: string
+        data:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        dataInicio:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        dataFim:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        idFila:
+          type: string
+        idContratante:
+          type: string
+        __v:
+          type: integer
+      required:
+        - nome
+        - nivel
+        - valor
+        - data
+    Hierarquia:
+      type: object
+      properties:
+        _id:
+          type: string
+        idColaborador:
+          type: string
+        nomeNivel:
+          type: string
+        pesoNivel:
+          type: number
+        idSuperior:
+          type: string
+        idControleContratante:
+          type: string
+        data:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        dataInicio:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        dataFim:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        idFila:
+          type: string
+        idContratante:
+          type: string
+        __v:
+          type: integer
+      required:
+        - identificadorContratante
+        - nomeNivel
+        - pesoNivel
+        - data
+    Resultado:
+      type: object
+      properties:
+        _id:
+          type: string
+        idColaborador:
+          type: string
+        idIndicador:
+          type: string
+        resultado:
+          type: string
+        data:
+          type: string
+          pattern: '^\d{4}-0[1-9]|1[0-2]-(0[0-9]|1[0-9]|2[0-9]|3[01])$'
+        fatores:
+          type: array
+          example:
+            - 1
+            - 2
+            - 3
+          items:
+            type: number
+        idFila:
+          type: string
+        idContratante:
+          type: string
+        __v:
+          type: integer
+      required:
+        - idColaborador
+        - idIndicador
+        - resultado
+        - data
+        - fatores
+    ColaboradorOperacao:
+      allOf:
+        - $ref: '#/components/schemas/Colaborador'
+        - type: object
+          properties:
+            idFila:
+              type: string
+            idContratante:
+              type: string
+            __v:
+              type: integer
+servers:
+  - url: /ls1128rst001/v1
+x-ibm-configuration:
+  enforced: true
+  testable: true
+  phase: realized
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - invoke:
+          title: invoke
+          timeout: 60
+          verb: GET
+          cache-response: protocol
+          cache-ttl: 900
+          stop-on-error:
+            - null
+          version: 1.0.0
+          target-url: $(target-url)$(api.operation.path)
+    catch: []
+  properties:
+    target-url:
+      value: 'http://lnxdev041.rootbrasil.intranet:10003/ls1128rst001/v1'
+      description: ''
+      encoded: false
+basePath: /gestao-rh/v1/colaboradoresrobbyson
+security: []
