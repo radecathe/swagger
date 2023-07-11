@@ -850,29 +850,4 @@ components:
               type: integer
 servers:
   - url: /ls1128rst001/v1
-x-ibm-configuration:
-  enforced: true
-  testable: true
-  phase: realized
-  cors:
-    enabled: true
-  assembly:
-    execute:
-      - invoke:
-          title: invoke
-          timeout: 60
-          verb: GET
-          cache-response: protocol
-          cache-ttl: 900
-          stop-on-error:
-            - null
-          version: 1.0.0
-          target-url: $(target-url)$(api.operation.path)
-    catch: []
-  properties:
-    target-url:
-      value: 'http://lnxdev041.rootbrasil.intranet:10003/ls1128rst001/v1'
-      description: ''
-      encoded: false
 basePath: /gestao-rh/v1/colaboradoresrobbyson
-security: []
